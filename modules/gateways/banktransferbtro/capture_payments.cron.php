@@ -203,7 +203,7 @@ if(count($unknown_transfers)>0) {
 	$c=0;
 	foreach($unknown_transfers as $l) {
 		// check if we have sent already notification about unknown transaction
-		$db_trans = Capsule::table('mod_wiretransferbt_transactions')->select('*')->where('iban','=', $l['iban'])->whereRaw('CONCAT(amount) = ?', [ $l['amount'] ])->count();
+		$db_trans = Capsule::table('mod_wiretransferbt_transactions')->select('*')->where('iban','=', $l['iban'])->whereRaw('amount = ?', [ $l['amount'] ])->count();
 		if($db_trans == 1) {
 			echo "skipping ".$l['company']."\n";
 			continue;
