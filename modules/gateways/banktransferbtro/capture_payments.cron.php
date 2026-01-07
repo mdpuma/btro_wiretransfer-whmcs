@@ -203,9 +203,9 @@ if(count($unknown_transfers)>0) {
 	$c=0;
 	foreach($unknown_transfers as $l) {
 		// check if we have sent already notification about unknown transaction
-		$db_trans = Capsule::table('mod_wiretransferbt_transactions')->select('*')->where('iban','=', $l['iban'])->whereRaw('amount = ?', [ $l['amount'] ])->count();
-		if($db_trans == 1) {
-			echo "skipping ".$l['company']."\n";
+		$db_trans = Capsule::table('mod_wiretransferbt_transactions')->select('*')->where('iban','=', $l['iban'])->whereRaw('CAST(amount AS CHAR) = ?', [ $l['amount'] ])->count();
+		if($db_trans >= 1) {
+			echo "skipping ".$l['company']." line ".__LINE__."\n";
 			continue;
 		}
 		
@@ -223,6 +223,7 @@ if(count($unknown_transfers)>0) {
 		$c++;
 	}
 	if($c>0) {
+//      var_dump($message);
 		$result = localAPI('TriggerNotificationEvent', array(
 			'notification_identifier' => 'verificareplati',
 			'title' => 'Achitari neprocesate',
