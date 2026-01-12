@@ -12,11 +12,18 @@ $whmcs->load_function('invoice');
 use WHMCS\Database\Capsule;
 
 
-$result = localAPI('TriggerNotificationEvent', array(
-		'notification_identifier' => 'verificareplati',
-		'title' => 'Achitari neprocesate',
-		'message' => 'te rog verifica aceste achitari',
-		'statusStyle' => 'info',
-	));
+//$result = localAPI('TriggerNotificationEvent', array(
+//		'notification_identifier' => 'verificareplati',
+//		'title' => 'Achitari neprocesate',
+//		'message' => 'te rog verifica aceste achitari',
+//		'statusStyle' => 'info',
+//	));
+
+$result = run_hook('TriggerCustomNotificationEvent', array(
+	    'notification_identifier' => 'verificareplati',
+	    'title' => 'Achitari neprocesate',
+	    'custom_message' => $message,
+	    'statusStyle' => 'info',
+	  ));
 
 var_dump($result);

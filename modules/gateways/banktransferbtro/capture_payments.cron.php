@@ -224,12 +224,18 @@ if(count($unknown_transfers)>0) {
 	}
 	if($c>0) {
 //      var_dump($message);
-		$result = localAPI('TriggerNotificationEvent', array(
-			'notification_identifier' => 'verificareplati',
-			'title' => 'Achitari neprocesate',
-			'message' => $message,
-			'statusStyle' => 'info',
-		));
+//		$result = localAPI('TriggerNotificationEvent', array(
+//			'notification_identifier' => 'verificareplati',
+//			'title' => 'Achitari neprocesate',
+//			'message' => $message,
+//			'statusStyle' => 'info',
+//		));
+    $result = run_hook('TriggerCustomNotificationEvent', array(
+	    'notification_identifier' => 'verificareplati',
+	    'title' => 'Achitari neprocesate',
+	    'custom_message' => $message,
+	    'statusStyle' => 'info',
+	  ));
 	}
 }
 
